@@ -30,18 +30,18 @@ class JsonCustomClassDeserializer {
         assertEquals("Иванов", client.lastName)
         assertEquals("Иванович", client.middleName)
     }
-}
 
-class Client7CustomDeserializer : StdDeserializer<Client7>(Client7::class.java) {
-    override fun deserialize(jp: JsonParser, ctxt: DeserializationContext): Client7 {
-        val jsonNode =
-            jp.readValueAsTree<TreeNode>()
-            .get("client")
-            .toString()
-            .replace("\"", "")
-            .split(" ")
-        return Client7(jsonNode[1], jsonNode[0], jsonNode[2])
+    class Client7CustomDeserializer : StdDeserializer<Client7>(Client7::class.java) {
+        override fun deserialize(jp: JsonParser, ctxt: DeserializationContext): Client7 {
+            val jsonNode =
+                jp.readValueAsTree<TreeNode>()
+                    .get("client")
+                    .toString()
+                    .replace("\"", "")
+                    .split(" ")
+            return Client7(jsonNode[1], jsonNode[0], jsonNode[2])
+        }
+
     }
-
 }
 

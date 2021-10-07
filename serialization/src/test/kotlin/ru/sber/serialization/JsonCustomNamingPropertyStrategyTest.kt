@@ -1,5 +1,6 @@
 package ru.sber.serialization
 
+import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -15,10 +16,11 @@ class JsonCustomNamingPropertyStrategyTest {
     fun `Кастомная стратегия десериализации`() {
         // given
         val data =
-            """{"firstName": "Иван", "lastName": "Иванов", "middleName": "Иванович", "passportNumber": "123456", "passportSerial": "1234", "birthDate": "1990-01-01"}"""
+            """{"FIRSTNAME": "Иван", "LASTNAME": "Иванов", "MIDDLENAME": "Иванович", "PASSPORTNUMBER": "123456", "PASSPORTSERIAL": "1234", "BIRTHDATE": "1990-01-01"}"""
         val objectMapper = ObjectMapper()
                 .registerModules(KotlinModule(), JavaTimeModule())
                 .enable(SerializationFeature.INDENT_OUTPUT)
+                .enable(MapperFeature.ACCEPT_CASE_INSENSITIVE_PROPERTIES)
 
         // when
         val client = objectMapper.readValue<Client1>(data)
